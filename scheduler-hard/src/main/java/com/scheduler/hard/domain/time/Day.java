@@ -1,17 +1,14 @@
 package com.scheduler.hard.domain.time;
 
 import com.scheduler.hard.domain.Person;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.Collections.EMPTY_LIST;
 
@@ -39,19 +36,22 @@ public class Day {
         }
     }
 
-    public Optional<Integer> isPersonAtSchedule(Integer id) {
+    public boolean isPersonAtSchedule(Integer id) {
         return this.spots.stream()
-                .filter(i -> i.equals(id))
-                .findFirst();
+                .anyMatch(i -> i.equals(id));
 
     }
 
     public boolean isDayEmpty() {
-        return  this.spots.size() == 0;
+        return this.spots.size() == 0;
     }
 
     public boolean isDayFull() {
-        return  this.spots.size() == this.max;
+        return this.spots.size() == this.max;
+    }
+
+    public Days getDay() {
+        return this.day;
     }
 
     public List<Person> getPersonsScheduled(Set<Person> persons) {
