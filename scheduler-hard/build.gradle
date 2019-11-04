@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.scheduler.hard'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.13'
+sourceCompatibility = '1.12'
 
 configurations {
 	compileOnly {
@@ -23,7 +23,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

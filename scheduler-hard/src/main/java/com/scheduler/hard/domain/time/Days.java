@@ -1,10 +1,5 @@
 package com.scheduler.hard.domain.time;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@AllArgsConstructor
-@Getter
 public enum Days {
     SUN("sunday"),
     MON("monday"),
@@ -14,4 +9,12 @@ public enum Days {
     FRI("friday"),
     SAT("saturday");
     private final String name;
+
+    Days(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
