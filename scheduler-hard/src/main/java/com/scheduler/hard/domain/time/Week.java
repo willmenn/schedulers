@@ -5,6 +5,8 @@ import com.scheduler.hard.domain.Person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.scheduler.hard.domain.time.Days.FRI;
 import static com.scheduler.hard.domain.time.Days.MON;
@@ -13,6 +15,7 @@ import static com.scheduler.hard.domain.time.Days.SUN;
 import static com.scheduler.hard.domain.time.Days.THU;
 import static com.scheduler.hard.domain.time.Days.TUE;
 import static com.scheduler.hard.domain.time.Days.WED;
+import static java.util.stream.Collectors.toList;
 
 public class Week {
     private final List<Day> days;
@@ -49,5 +52,12 @@ public class Week {
                 .findFirst()
                 .map(d -> d.isPersonAtSchedule(person.getId()))
                 .orElse(false);
+    }
+
+    public List<DayTuple> getScheduleWithPersons(Set<Person> persons) {
+        return this.days
+                .stream()
+                .map(d -> new DayTuple(d.getDay(), d.getPersonsScheduled(persons)))
+                .collect(toList());
     }
 }

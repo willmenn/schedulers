@@ -4,9 +4,13 @@ import com.scheduler.hard.domain.Person;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static com.scheduler.hard.domain.time.Days.MON;
 import static com.scheduler.hard.domain.time.Days.TUE;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class WeekTest {
 
@@ -67,5 +71,81 @@ class WeekTest {
 
         boolean isPersonScheduled = week.isPersonScheduledForDay(MON, person2);
         Assertions.assertFalse(isPersonScheduled);
+    }
+
+    @Test
+    void shouldBeAbleToGetDaysByPerson() {
+        Week week = new Week(2);
+        Person person1 = new Person(1);
+        week.addPersonIntoDay(MON, person1);
+
+        Set<Person> persons = new HashSet<>();
+        persons.add(person1);
+
+        List<DayTuple> scheduled = week.getScheduleWithPersons(persons);
+        assertThat(scheduled)
+                .flatExtracting("persons")
+                .extracting("id")
+                .containsExactlyInAnyOrder(1);
+    }
+
+    @Test
+    void shouldBeAbleToGetTwoPersonsInTheSameDay() {
+        Week week = new Week(2);
+        Person person1 = new Person(1);
+        Person person2 = new Person(2);
+        week.addPersonIntoDay(MON, person1);
+        week.addPersonIntoDay(MON, person2);
+
+        Set<Person> persons = new HashSet<>();
+        persons.add(person1);
+        persons.add(person2);
+
+        List<DayTuple> scheduled = week.getScheduleWithPersons(persons);
+        assertThat(scheduled)
+                .flatExtracting("persons")
+                .extracting("id")
+                .containsExactlyInAnyOrder(1, 2);
+    }
+
+    @Test
+    void shouldBeAbleToGetTwoPersonsInDifferentDay() {
+        Week week = new Week(2);
+        Person person1 = new Person(1);
+        Person person2 = new Person(2);
+        week.addPersonIntoDay(MON, person1);
+        week.addPersonIntoDay(TUE, person2);
+
+        Set<Person> persons = new HashSet<>();
+        persons.add(person1);
+        persons.add(person2);
+
+        List<DayTuple> scheduled = week.getScheduleWithPersons(persons);
+        assertThat(scheduled)
+                .flatExtracting("persons")
+                .extracting("id")
+                .containsExactlyInAnyOrder(1, 2);
+    }
+
+    @Test
+    void shouldBeAbleToGetTwoPersonsGivenExceedTheCapacity() {
+        Week week = new Week(2);
+        Person person1 = new Person(1);
+        Person person2 = new Person(2);
+        Person person3 = new Person(3);
+        week.addPersonIntoDay(MON, person1);
+        week.addPersonIntoDay(MON, person2);
+        week.addPersonIntoDay(MON, person3);
+
+        Set<Person> persons = new HashSet<>();
+        persons.add(person1);
+        persons.add(person2);
+        persons.add(person3);
+
+        List<DayTuple> scheduled = week.getScheduleWithPersons(persons);
+        assertThat(scheduled)
+                .flatExtracting("persons")
+                .extracting("id")
+                .containsExactlyInAnyOrder(1, 2);
     }
 }
