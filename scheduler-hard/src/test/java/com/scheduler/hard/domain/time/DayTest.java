@@ -4,6 +4,7 @@ import com.scheduler.hard.domain.Person;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -80,9 +81,9 @@ class DayTest {
         day.addUniquePerson(1);
         day.addUniquePerson(2);
 
-        Person p1 = new Person(1);
-        Person p2 = new Person(2);
-        Person p3 = new Person(3);
+        Person p1 = new Person(1, new HashSet<>());
+        Person p2 = new Person(2, new HashSet<>());
+        Person p3 = new Person(3, new HashSet<>());
 
         Set<Person> persons = new HashSet<>();
         persons.add(p1);
@@ -99,9 +100,9 @@ class DayTest {
     void shouldNotBeAbleToGetPersonsScheduledGivenDayIsEmpty() {
         Day day = new Day(MON, 2);
 
-        Person p1 = new Person(1);
-        Person p2 = new Person(2);
-        Person p3 = new Person(3);
+        Person p1 = new Person(1, new HashSet<>());
+        Person p2 = new Person(2, new HashSet<>());
+        Person p3 = new Person(3, new HashSet<>());
 
         Set<Person> persons = new HashSet<>();
         persons.add(p1);

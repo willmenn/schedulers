@@ -17,36 +17,36 @@ class WeekTest {
     @Test
     void shouldBeAbleToAddPersonIntoDayGivenDayIsNotFull() {
         Week week = new Week(2);
-        Person person = new Person(1);
-        boolean isAbleToAddPerson = week.addPersonIntoDay(MON, person);
+        Person person = new Person(1, new HashSet<>());
+        boolean isAbleToAddPerson = week.addPersonIntoDay(MON, person.getId());
         Assertions.assertTrue(isAbleToAddPerson);
     }
 
     @Test
     void shouldNotBeAbleToAddPersonGivenDayIsFull() {
         Week week = new Week(1);
-        Person person1 = new Person(1);
-        Person person2 = new Person(2);
-        week.addPersonIntoDay(MON, person1);
-        boolean isAbleToAddPerson = week.addPersonIntoDay(MON, person2);
+        Person person1 = new Person(1, new HashSet<>());
+        Person person2 = new Person(2, new HashSet<>());
+        week.addPersonIntoDay(MON, person1.getId());
+        boolean isAbleToAddPerson = week.addPersonIntoDay(MON, person2.getId());
         Assertions.assertFalse(isAbleToAddPerson);
     }
 
     @Test
     void shouldNotBeAbleToAddPersonGivenPersonWasAlreadyInThatDay() {
         Week week = new Week(2);
-        Person person1 = new Person(1);
-        Person person2 = new Person(1);
-        week.addPersonIntoDay(MON, person1);
-        boolean isAbleToAddPerson = week.addPersonIntoDay(MON, person2);
+        Person person1 = new Person(1, new HashSet<>());
+        Person person2 = new Person(1, new HashSet<>());
+        week.addPersonIntoDay(MON, person1.getId());
+        boolean isAbleToAddPerson = week.addPersonIntoDay(MON, person2.getId());
         Assertions.assertFalse(isAbleToAddPerson);
     }
 
     @Test
     void shouldBeAbleToCheckIfPersonIsAtACertainDay() {
         Week week = new Week(2);
-        Person person1 = new Person(1);
-        week.addPersonIntoDay(MON, person1);
+        Person person1 = new Person(1, new HashSet<>());
+        week.addPersonIntoDay(MON, person1.getId());
 
         boolean isPersonScheduled = week.isPersonScheduledForDay(MON, person1);
         Assertions.assertTrue(isPersonScheduled);
@@ -55,8 +55,8 @@ class WeekTest {
     @Test
     void shouldBeAbleToCheckIfPersonIsNotAtACertainDayGivenDayIsEmpty() {
         Week week = new Week(2);
-        Person person1 = new Person(1);
-        week.addPersonIntoDay(MON, person1);
+        Person person1 = new Person(1, new HashSet<>());
+        week.addPersonIntoDay(MON, person1.getId());
 
         boolean isPersonScheduled = week.isPersonScheduledForDay(TUE, person1);
         Assertions.assertFalse(isPersonScheduled);
@@ -65,9 +65,9 @@ class WeekTest {
     @Test
     void shouldBeAbleToCheckIfPersonIsNotAtACertainDay() {
         Week week = new Week(2);
-        Person person1 = new Person(1);
-        Person person2 = new Person(2);
-        week.addPersonIntoDay(MON, person1);
+        Person person1 = new Person(1, new HashSet<>());
+        Person person2 = new Person(2, new HashSet<>());
+        week.addPersonIntoDay(MON, person1.getId());
 
         boolean isPersonScheduled = week.isPersonScheduledForDay(MON, person2);
         Assertions.assertFalse(isPersonScheduled);
@@ -76,8 +76,8 @@ class WeekTest {
     @Test
     void shouldBeAbleToGetDaysByPerson() {
         Week week = new Week(2);
-        Person person1 = new Person(1);
-        week.addPersonIntoDay(MON, person1);
+        Person person1 = new Person(1, new HashSet<>());
+        week.addPersonIntoDay(MON, person1.getId());
 
         Set<Person> persons = new HashSet<>();
         persons.add(person1);
@@ -92,10 +92,10 @@ class WeekTest {
     @Test
     void shouldBeAbleToGetTwoPersonsInTheSameDay() {
         Week week = new Week(2);
-        Person person1 = new Person(1);
-        Person person2 = new Person(2);
-        week.addPersonIntoDay(MON, person1);
-        week.addPersonIntoDay(MON, person2);
+        Person person1 = new Person(1, new HashSet<>());
+        Person person2 = new Person(2, new HashSet<>());
+        week.addPersonIntoDay(MON, person1.getId());
+        week.addPersonIntoDay(MON, person2.getId());
 
         Set<Person> persons = new HashSet<>();
         persons.add(person1);
@@ -111,10 +111,10 @@ class WeekTest {
     @Test
     void shouldBeAbleToGetTwoPersonsInDifferentDay() {
         Week week = new Week(2);
-        Person person1 = new Person(1);
-        Person person2 = new Person(2);
-        week.addPersonIntoDay(MON, person1);
-        week.addPersonIntoDay(TUE, person2);
+        Person person1 = new Person(1, new HashSet<>());
+        Person person2 = new Person(2, new HashSet<>());
+        week.addPersonIntoDay(MON, person1.getId());
+        week.addPersonIntoDay(TUE, person2.getId());
 
         Set<Person> persons = new HashSet<>();
         persons.add(person1);
@@ -130,12 +130,12 @@ class WeekTest {
     @Test
     void shouldBeAbleToGetTwoPersonsGivenExceedTheCapacity() {
         Week week = new Week(2);
-        Person person1 = new Person(1);
-        Person person2 = new Person(2);
-        Person person3 = new Person(3);
-        week.addPersonIntoDay(MON, person1);
-        week.addPersonIntoDay(MON, person2);
-        week.addPersonIntoDay(MON, person3);
+        Person person1 = new Person(1, new HashSet<>());
+        Person person2 = new Person(2, new HashSet<>());
+        Person person3 = new Person(3, new HashSet<>());
+        week.addPersonIntoDay(MON, person1.getId());
+        week.addPersonIntoDay(MON, person2.getId());
+        week.addPersonIntoDay(MON, person3.getId());
 
         Set<Person> persons = new HashSet<>();
         persons.add(person1);

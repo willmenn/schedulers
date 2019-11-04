@@ -8,7 +8,7 @@ public class DayTuple {
     private final Days days;
     private final List<Person> persons;
 
-    public DayTuple(Days days, List<Person> persons) {
+    DayTuple(Days days, List<Person> persons) {
         this.days = days;
         this.persons = persons;
     }

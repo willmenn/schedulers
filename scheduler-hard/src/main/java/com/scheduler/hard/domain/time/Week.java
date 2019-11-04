@@ -36,12 +36,12 @@ public class Week {
         return days;
     }
 
-    public boolean addPersonIntoDay(Days day, Person person) {
+    public boolean addPersonIntoDay(Days day, Integer id) {
         return this.days
                 .stream()
                 .filter(d -> d.getDay().equals(day))
                 .findFirst()
-                .map(d -> d.addUniquePerson(person.getId()))
+                .map(d -> d.addUniquePerson(id))
                 .orElse(false);
     }
 
