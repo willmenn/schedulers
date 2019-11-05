@@ -4,12 +4,9 @@ import com.scheduler.hard.domain.time.Days;
 import com.scheduler.hard.domain.time.Week;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.groupingBy;
 
 public class Scheduler {
 
@@ -45,6 +42,20 @@ public class Scheduler {
 
         private Integer getId() {
             return id;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PersonTuple that = (PersonTuple) o;
+            return day == that.day &&
+                    Objects.equals(id, that.id);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(day, id);
         }
     }
 }

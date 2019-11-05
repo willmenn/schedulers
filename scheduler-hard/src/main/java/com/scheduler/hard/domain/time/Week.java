@@ -4,9 +4,7 @@ import com.scheduler.hard.domain.Person;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.scheduler.hard.domain.time.Days.FRI;
 import static com.scheduler.hard.domain.time.Days.MON;

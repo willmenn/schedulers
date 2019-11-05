@@ -2,7 +2,6 @@ package com.scheduler.hard.domain;
 
 import com.scheduler.hard.domain.time.Days;
 
-import java.util.List;
 import java.util.Set;
 
 public class Person {
