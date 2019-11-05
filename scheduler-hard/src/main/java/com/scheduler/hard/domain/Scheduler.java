@@ -22,7 +22,7 @@ public class Scheduler {
     private Set<PersonTuple> getPersonByDay(Person person) {
         return Days.all
                 .stream()
-                .filter(person::isDayInExclusionList)
+                .filter(d -> !person.isDayInExclusionList(d))
                 .map(d -> new PersonTuple(d, person.getId()))
                 .collect(Collectors.toSet());
     }
