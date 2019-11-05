@@ -12,14 +12,14 @@ public class Scheduler {
 
     public Week schedule(Set<Person> persons, Week week) {
         persons.stream()
-                .map(this::getPersonByDay)
+                .map(this::createTuplePersonByDay)
                 .flatMap(Collection::stream)
                 .forEach(tuple -> week.addPersonIntoDay(tuple.getDay(), tuple.getId()));
 
         return week;
     }
 
-    private Set<PersonTuple> getPersonByDay(Person person) {
+    private Set<PersonTuple> createTuplePersonByDay(Person person) {
         return Days.all
                 .stream()
                 .filter(d -> !person.isDayInExclusionList(d))
