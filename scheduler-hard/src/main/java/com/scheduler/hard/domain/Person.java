@@ -2,6 +2,7 @@ package com.scheduler.hard.domain;
 
 import com.scheduler.hard.domain.time.Days;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class Person {
@@ -21,5 +22,18 @@ public class Person {
         return this.exclusionList
                 .stream()
                 .anyMatch(d -> d.equals(day));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id.equals(person.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
