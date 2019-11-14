@@ -1,14 +1,13 @@
 package com.scheduler.hard.domain;
 
-import com.scheduler.hard.domain.time.Days;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.scheduler.hard.domain.time.Days.MON;
-import static com.scheduler.hard.domain.time.Days.TUE;
+import static com.scheduler.hard.domain.Days.MON;
+import static com.scheduler.hard.domain.Days.TUE;
 
 class PersonTest {
 
@@ -16,7 +15,7 @@ class PersonTest {
     void shouldBeAbleToCheckIfDayIsInExclusionList() {
         Set<Days> exclusionList = new HashSet<>();
         exclusionList.add(MON);
-        Person person = new Person(1, exclusionList);
+        Person person = new Person(1, exclusionList, new HashSet<>());
         boolean dayInExclusionList = person.isDayInExclusionList(MON);
         Assertions.assertTrue(dayInExclusionList);
     }
@@ -25,7 +24,7 @@ class PersonTest {
     void shouldBeAbleToCheckIfDayIsNotInExclusionList() {
         Set<Days> exclusionList = new HashSet<>();
         exclusionList.add(MON);
-        Person person = new Person(1, exclusionList);
+        Person person = new Person(1, exclusionList, new HashSet<>());
         boolean dayInExclusionList = person.isDayInExclusionList(TUE);
         Assertions.assertFalse(dayInExclusionList);
     }

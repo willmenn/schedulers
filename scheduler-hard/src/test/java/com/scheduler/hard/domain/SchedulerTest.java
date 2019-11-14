@@ -1,8 +1,6 @@
 package com.scheduler.hard.domain;
 
-import com.scheduler.hard.domain.time.DayTuple;
-import com.scheduler.hard.domain.time.Days;
-import com.scheduler.hard.domain.time.Week;
+import com.scheduler.hard.Scheduler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +9,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.scheduler.hard.domain.time.Days.FRI;
-import static com.scheduler.hard.domain.time.Days.MON;
-import static com.scheduler.hard.domain.time.Days.SAT;
-import static com.scheduler.hard.domain.time.Days.SUN;
-import static com.scheduler.hard.domain.time.Days.THU;
-import static com.scheduler.hard.domain.time.Days.TUE;
-import static com.scheduler.hard.domain.time.Days.WED;
+import static com.scheduler.hard.domain.Days.FRI;
+import static com.scheduler.hard.domain.Days.MON;
+import static com.scheduler.hard.domain.Days.SAT;
+import static com.scheduler.hard.domain.Days.SUN;
+import static com.scheduler.hard.domain.Days.THU;
+import static com.scheduler.hard.domain.Days.TUE;
+import static com.scheduler.hard.domain.Days.WED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SchedulerTest {
@@ -34,7 +32,7 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToSchedule() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN));
+        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
         Week week = scheduler.schedule(persons, new Week(1));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
@@ -54,8 +52,8 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToScheduleGivenThereIsTwoPersonsForTheSameDay() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN));
-        persons.add(new Person(2, ALL_EXCEPT_SUN));
+        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
+        persons.add(new Person(2, ALL_EXCEPT_SUN, new HashSet<>()));
         Week week = scheduler.schedule(persons, new Week(2));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
@@ -75,8 +73,8 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToScheduleGivenThereIsTwoPersonsForDifferentDays() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN));
-        persons.add(new Person(2, ALL_EXCEPT_MON));
+        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
+        persons.add(new Person(2, ALL_EXCEPT_MON, new HashSet<>()));
         Week week = scheduler.schedule(persons, new Week(2));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
@@ -103,17 +101,15 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToScheduleOnePersonGivenCapacityExceeds() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN));
-        persons.add(new Person(2, ALL_EXCEPT_SUN));
+        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
+        persons.add(new Person(2, ALL_EXCEPT_SUN, new HashSet<>()));
         Week week = scheduler.schedule(persons, new Week(1));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
         assertThat(scheduleWithPersons)
                 .filteredOn(tuple -> tuple.getDays().equals(SUN))
                 .flatExtracting("persons")
-                .hasSize(1)
-                .extracting("id")
-                .containsOnly(1);
+                .hasSize(1);
 
         assertThat(scheduleWithPersons)
                 .filteredOn(tuple -> !tuple.getDays().equals(SUN))
@@ -124,9 +120,9 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToSchedule2PersonsGivenCapacityExceedsInTwoDays() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN));
-        persons.add(new Person(2, ALL_EXCEPT_MON));
-        persons.add(new Person(3, ALL_EXCEPT_SUN));
+        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
+        persons.add(new Person(2, ALL_EXCEPT_MON, new HashSet<>()));
+        persons.add(new Person(3, ALL_EXCEPT_SUN, new HashSet<>()));
         Week week = scheduler.schedule(persons, new Week(1));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 

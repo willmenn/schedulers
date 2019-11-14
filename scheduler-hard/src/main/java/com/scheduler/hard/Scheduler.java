@@ -1,7 +1,9 @@
-package com.scheduler.hard.domain;
+package com.scheduler.hard;
 
-import com.scheduler.hard.domain.time.Days;
-import com.scheduler.hard.domain.time.Week;
+import com.scheduler.hard.domain.Days;
+import com.scheduler.hard.domain.Person;
+import com.scheduler.hard.domain.Shifts;
+import com.scheduler.hard.domain.Week;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -12,28 +14,37 @@ public class Scheduler {
 
     public Week schedule(Set<Person> persons, Week week) {
         persons.stream()
-                .map(this::createTuplePersonByDay)
+                .map(this::createTuplePersonByDayShift)
                 .flatMap(Collection::stream)
-                .forEach(tuple -> week.addPersonIntoDay(tuple.getDay(), tuple.getId()));
+                .forEach(tuple -> week.addPersonIntoDay(tuple.getDay(), tuple.getShift(), tuple.getId()));
 
         return week;
     }
 
-    private Set<PersonTuple> createTuplePersonByDay(Person person) {
+    private Set<PersonTuple> createTuplePersonByDayShift(Person person) {
         return Days.all
                 .stream()
-                .filter(d -> !person.isDayInExclusionList(d))
-                .map(d -> new PersonTuple(d, person.getId()))
+                .map(d -> addShifts(person, d))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
+    }
+
+    private Set<PersonTuple> addShifts(Person person, Days d) {
+        return Shifts.all.stream()
+                .filter(shift -> !person.isDayAndShiftInExclusionList(d, shift))
+                .map(shift -> new PersonTuple(d, person.getId(), shift))
                 .collect(Collectors.toSet());
     }
 
     private class PersonTuple {
         private final Days day;
         private final Integer id;
+        private final Shifts shift;
 
-        PersonTuple(Days day, Integer id) {
+        PersonTuple(Days day, Integer id, Shifts shift) {
             this.day = day;
             this.id = id;
+            this.shift = shift;
         }
 
         private Days getDay() {
@@ -42,6 +53,10 @@ public class Scheduler {
 
         private Integer getId() {
             return id;
+        }
+
+        private Shifts getShift() {
+            return shift;
         }
 
         @Override

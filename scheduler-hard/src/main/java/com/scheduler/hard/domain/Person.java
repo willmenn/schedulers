@@ -1,27 +1,25 @@
 package com.scheduler.hard.domain;
 
-import com.scheduler.hard.domain.time.Days;
-
 import java.util.Objects;
 import java.util.Set;
 
 public class Person {
     private final Integer id;
-    private final Set<Days> exclusionList;
+    private final Set<DayShiftTuple> dayShiftExclusionList;
 
-    public Person(Integer id, Set<Days> exclusionList) {
+    public Person(Integer id, Set<DayShiftTuple> dayShiftExclusionList) {
         this.id = id;
-        this.exclusionList = exclusionList;
+        this.dayShiftExclusionList = dayShiftExclusionList;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public boolean isDayInExclusionList(Days day) {
-        return this.exclusionList
+    public boolean isDayAndShiftInExclusionList(Days day, Shifts shift) {
+        return this.dayShiftExclusionList
                 .stream()
-                .anyMatch(d -> d.equals(day));
+                .anyMatch(s -> s.isEquals(day, shift));
     }
 
     @Override
