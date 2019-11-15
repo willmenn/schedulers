@@ -51,7 +51,7 @@ class WeekTest {
         Set<Person> persons = new HashSet<>();
         persons.add(person1);
 
-        List<DayTuple> scheduled = week.getScheduleWithPersons(persons);
+        List<DayPeopleTuple> scheduled = week.getScheduleWithPersons(persons);
         assertThat(scheduled)
                 .flatExtracting("persons")
                 .extracting("id")
@@ -70,7 +70,7 @@ class WeekTest {
         persons.add(person1);
         persons.add(person2);
 
-        List<DayTuple> scheduled = week.getScheduleWithPersons(persons);
+        List<DayPeopleTuple> scheduled = week.getScheduleWithPersons(persons);
         assertThat(scheduled)
                 .flatExtracting("persons")
                 .extracting("id")
@@ -89,7 +89,7 @@ class WeekTest {
         persons.add(person1);
         persons.add(person2);
 
-        List<DayTuple> scheduled = week.getScheduleWithPersons(persons);
+        List<DayPeopleTuple> scheduled = week.getScheduleWithPersons(persons);
         assertThat(scheduled)
                 .flatExtracting("persons")
                 .extracting("id")
@@ -111,7 +111,7 @@ class WeekTest {
         persons.add(person2);
         persons.add(person3);
 
-        List<DayTuple> scheduled = week.getScheduleWithPersons(persons);
+        List<DayPeopleTuple> scheduled = week.getScheduleWithPersons(persons);
         assertThat(scheduled)
                 .flatExtracting("persons")
                 .extracting("id")

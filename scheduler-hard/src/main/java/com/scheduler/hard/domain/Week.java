@@ -37,14 +37,10 @@ public class Week {
         return getDay.apply(this).addUniquePerson(id, shift.getShift());
     }
 
-    public List<DayTuple> getScheduleWithPersons(Set<Person> persons) {
+    public List<DayPeopleTuple> getScheduleWithPersons(Set<Person> persons) {
         return StreamAllDays()
-                .map(d -> new DayTuple(d.getDay(), d.getPersonsScheduled(persons)))
+                .map(d -> new DayPeopleTuple(d.getDay(), d.getPersonsScheduled(persons)))
                 .collect(toList());
-    }
-
-    private Stream<Day> StreamAllDays() {
-        return Stream.of(this.sun, this.mon, this.tue, this.wed, this.thu, this.fri, this.sat);
     }
 
     Day getSun() {
@@ -73,5 +69,9 @@ public class Week {
 
     Day getSat() {
         return sat;
+    }
+
+    private Stream<Day> StreamAllDays() {
+        return Stream.of(this.sun, this.mon, this.tue, this.wed, this.thu, this.fri, this.sat);
     }
 }

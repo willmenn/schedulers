@@ -4,27 +4,20 @@ import java.util.EnumSet;
 import java.util.function.Function;
 
 public enum Days {
-    SUN("sunday", Week::getSun),
-    MON("monday", Week::getMon),
-    TUE("tuesday", Week::getTue),
-    WED("wednesday", Week::getWed),
-    THU("thursday", Week::getThu),
-    FRI("friday", Week::getFri),
-    SAT("saturday", Week::getSat);
+    SUN(Week::getSun),
+    MON(Week::getMon),
+    TUE(Week::getTue),
+    WED(Week::getWed),
+    THU(Week::getThu),
+    FRI(Week::getFri),
+    SAT(Week::getSat);
 
     public static final EnumSet<Days> all = EnumSet.allOf(Days.class);
 
-    private final String name;
     private final Function<Week, Day> day;
 
-
-    Days(String name, Function<Week, Day> day) {
-        this.name = name;
+    Days(Function<Week, Day> day) {
         this.day = day;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Function<Week, Day> getFuncDay() {

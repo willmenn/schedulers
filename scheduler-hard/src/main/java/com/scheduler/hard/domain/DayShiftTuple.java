@@ -15,13 +15,13 @@ public class DayShiftTuple {
         addShiftIfNotNull(this.shifts, night);
     }
 
+    boolean isEquals(Days day, Shifts shift) {
+        return this.day.equals(day) && this.shifts.stream().anyMatch(s -> s.equals(shift));
+    }
+
     private void addShiftIfNotNull(Set<Shifts> shifts, Shifts shift) {
         if (shifts != null && shift != null) {
             shifts.add(shift);
         }
-    }
-
-    boolean isEquals(Days day, Shifts shift) {
-        return this.day.equals(day) && this.shifts.stream().anyMatch(s -> s.equals(shift));
     }
 }
