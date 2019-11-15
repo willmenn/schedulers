@@ -16,7 +16,7 @@ class ShiftTest {
 
     @BeforeEach
     void setUp() {
-        shift = new Shift(2, Shifts.AFTERNOON);
+        shift = new Shift(2);
     }
 
     @Test

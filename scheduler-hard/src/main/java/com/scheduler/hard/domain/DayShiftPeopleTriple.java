@@ -3,12 +3,14 @@ package com.scheduler.hard.domain;
 import java.util.Objects;
 import java.util.Set;
 
-public class DayPeopleTuple {
+public class DayShiftPeopleTriple {
     private final Days days;
+    private final Shifts shifts;
     private final Set<Person> people;
 
-    public DayPeopleTuple(Days days, Set<Person> people) {
+    public DayShiftPeopleTriple(Days days, Shifts shifts, Set<Person> people) {
         this.days = days;
+        this.shifts = shifts;
         this.people = people;
     }
 
@@ -16,7 +18,7 @@ public class DayPeopleTuple {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DayPeopleTuple that = (DayPeopleTuple) o;
+        DayShiftPeopleTriple that = (DayShiftPeopleTriple) o;
         return days == that.days;
     }
 
@@ -27,6 +29,6 @@ public class DayPeopleTuple {
 
     @Override
     public String toString() {
-        return "{ Day=" + days + " people=" + people + "}\n";
+        return "{ Day=" + days + "| Shift=" + this.shifts + " | people=" + people + "}\n";
     }
 }

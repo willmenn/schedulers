@@ -1,5 +1,6 @@
 package com.scheduler.hard.domain;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -13,6 +14,7 @@ import static com.scheduler.hard.domain.Days.THU;
 import static com.scheduler.hard.domain.Days.TUE;
 import static com.scheduler.hard.domain.Days.WED;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 public class Week {
     private final Day sun;
@@ -24,23 +26,34 @@ public class Week {
     private final Day sat;
 
     public Week(int size) {
-        this.sun = new Day(SUN, size);
-        this.mon = new Day(MON, size);
-        this.tue = new Day(TUE, size);
-        this.wed = new Day(WED, size);
-        this.thu = new Day(THU, size);
-        this.fri = new Day(FRI, size);
-        this.sat = new Day(SAT, size);
+        this.sun = new Day(size);
+        this.mon = new Day(size);
+        this.tue = new Day(size);
+        this.wed = new Day(size);
+        this.thu = new Day(size);
+        this.fri = new Day(size);
+        this.sat = new Day(size);
     }
 
     public boolean addPersonIntoDay(Function<Week, Day> getDay, Shifts shift, Integer id) {
         return getDay.apply(this).addUniquePerson(id, shift.getShift());
     }
 
-    public List<DayPeopleTuple> getScheduleWithPersons(Set<Person> persons) {
-        return StreamAllDays()
-                .map(d -> new DayPeopleTuple(d.getDay(), d.getPersonsScheduled(persons)))
+    public List<DayShiftPeopleTriple> getScheduleWithPersons(Set<Person> persons) {
+        return Days.all.stream()
+                .map(d -> applyForEachShift(persons, d))
+                .flatMap(Collection::stream)
                 .collect(toList());
+    }
+
+    private Set<DayShiftPeopleTriple> applyForEachShift(Set<Person> persons, Days d) {
+        return Shifts.all.stream()
+                .map(shift -> new DayShiftPeopleTriple(d, shift, getPersonsScheduled(persons, d, shift)))
+                .collect(toSet());
+    }
+
+    private Set<Person> getPersonsScheduled(Set<Person> persons, Days d, Shifts shift) {
+        return d.getFuncDay().apply(this).getPersonsScheduled(persons, shift.getShift());
     }
 
     Day getSun() {
@@ -69,9 +82,5 @@ public class Week {
 
     Day getSat() {
         return sat;
-    }
-
-    private Stream<Day> StreamAllDays() {
-        return Stream.of(this.sun, this.mon, this.tue, this.wed, this.thu, this.fri, this.sat);
     }
 }

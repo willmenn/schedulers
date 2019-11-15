@@ -14,20 +14,20 @@ class DayTest {
 
     @Test
     void shouldBeAbleToAddAUniquePersonToADay() {
-        Day day = new Day(MON, 10);
+        Day day = new Day(10);
         Assertions.assertTrue(day.addUniquePerson(1, Shifts.MORNING.getShift()));
     }
 
     @Test
     void shouldNotBeAbleToAddPersonGivenDayIsFull() {
-        Day day = new Day(MON, 1);
+        Day day = new Day(1);
         Assertions.assertTrue(day.addUniquePerson(1, Shifts.MORNING.getShift()));
         Assertions.assertFalse(day.addUniquePerson(2, Shifts.MORNING.getShift()));
     }
 
     @Test
     void shouldNotBeAbleToAddAPersonGivenSheIsNotUnique() {
-        Day day = new Day(MON, 1);
+        Day day = new Day(1);
         Assertions.assertTrue(day.addUniquePerson(1, Shifts.MORNING.getShift()));
         Assertions.assertFalse(day.addUniquePerson(1, Shifts.MORNING.getShift()));
     }
@@ -35,7 +35,7 @@ class DayTest {
 
     @Test
     void shouldBeAbleToGetPersonsScheduledInThisDay() {
-        Day day = new Day(MON, 2);
+        Day day = new Day(2);
         day.addUniquePerson(1, Shifts.MORNING.getShift());
         day.addUniquePerson(2, Shifts.MORNING.getShift());
 
@@ -48,7 +48,7 @@ class DayTest {
         persons.add(p2);
         persons.add(p3);
 
-        Set<Person> personsScheduled = day.getPersonsScheduled(persons);
+        Set<Person> personsScheduled = day.getPersonsScheduled(persons, Shifts.MORNING.getShift());
         assertThat(personsScheduled)
                 .extracting("id")
                 .containsExactlyInAnyOrder(1, 2);
@@ -56,7 +56,7 @@ class DayTest {
 
     @Test
     void shouldNotBeAbleToGetPersonsScheduledGivenDayIsEmpty() {
-        Day day = new Day(MON, 2);
+        Day day = new Day(2);
 
         Person p1 = new Person(1, new HashSet<>());
         Person p2 = new Person(2, new HashSet<>());
@@ -67,13 +67,7 @@ class DayTest {
         persons.add(p2);
         persons.add(p3);
 
-        Set<Person> personsScheduled = day.getPersonsScheduled(persons);
+        Set<Person> personsScheduled = day.getPersonsScheduled(persons, Shifts.MORNING.getShift());
         assertThat(personsScheduled).isEmpty();
-    }
-
-    @Test
-    void shouldBeAbleToGetDays() {
-        Day day = new Day(MON, 2);
-        Assertions.assertEquals(MON, day.getDay());
     }
 }

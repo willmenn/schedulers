@@ -1,9 +1,10 @@
 package com.scheduler.hard;
 
 import com.scheduler.hard.domain.DayShiftTuple;
-import com.scheduler.hard.domain.DayPeopleTuple;
+import com.scheduler.hard.domain.DayShiftPeopleTriple;
 import com.scheduler.hard.domain.Days;
 import com.scheduler.hard.domain.Person;
+import com.scheduler.hard.domain.Shifts;
 import com.scheduler.hard.domain.Week;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,17 +44,17 @@ class SchedulerTest {
         Set<Person> persons = new HashSet<>();
         persons.add(new Person(1, allExceptSun()));
         Week week = scheduler.schedule(persons, new Week(1));
-        List<DayPeopleTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
+        List<DayShiftPeopleTriple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> tuple.equals(new DayPeopleTuple(SUN, new HashSet<>())))
+                .filteredOn(tuple -> tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(1)
                 .extracting("id")
                 .containsOnly(1);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> !tuple.equals(new DayPeopleTuple(SUN, new HashSet<>())))
+                .filteredOn(tuple -> !tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(0);
     }
@@ -64,17 +65,17 @@ class SchedulerTest {
         persons.add(new Person(1, allExceptSun()));
         persons.add(new Person(2, allExceptSun()));
         Week week = scheduler.schedule(persons, new Week(2));
-        List<DayPeopleTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
+        List<DayShiftPeopleTriple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> tuple.equals(new DayPeopleTuple(SUN, new HashSet<>())))
+                .filteredOn(tuple -> tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(2)
                 .extracting("id")
                 .containsExactlyInAnyOrder(1, 2);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> !tuple.equals(new DayPeopleTuple(SUN, new HashSet<>())))
+                .filteredOn(tuple -> !tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(0);
     }
@@ -85,25 +86,25 @@ class SchedulerTest {
         persons.add(new Person(1, allExceptSun()));
         persons.add(new Person(2, allExceptMon()));
         Week week = scheduler.schedule(persons, new Week(2));
-        List<DayPeopleTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
+        List<DayShiftPeopleTriple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> tuple.equals(new DayPeopleTuple(SUN, new HashSet<>())))
+                .filteredOn(tuple -> tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(1)
                 .extracting("id")
                 .containsOnly(1);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> tuple.equals(new DayPeopleTuple(MON, new HashSet<>())))
+                .filteredOn(tuple -> tuple.equals(new DayShiftPeopleTriple(MON, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(1)
                 .extracting("id")
                 .containsOnly(2);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> !tuple.equals(new DayPeopleTuple(SUN, new HashSet<>()))
-                        && !tuple.equals(new DayPeopleTuple(MON, new HashSet<>())))
+                .filteredOn(tuple -> !tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>()))
+                        && !tuple.equals(new DayShiftPeopleTriple(MON, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(0);
     }
@@ -114,15 +115,15 @@ class SchedulerTest {
         persons.add(new Person(1, allExceptSun()));
         persons.add(new Person(2, allExceptSun()));
         Week week = scheduler.schedule(persons, new Week(1));
-        List<DayPeopleTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
+        List<DayShiftPeopleTriple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> tuple.equals(new DayPeopleTuple(SUN, new HashSet<>())))
+                .filteredOn(tuple -> tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(1);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> !tuple.equals(new DayPeopleTuple(SUN, new HashSet<>())))
+                .filteredOn(tuple -> !tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(0);
     }
@@ -134,23 +135,23 @@ class SchedulerTest {
         persons.add(new Person(2, allExceptMon()));
         persons.add(new Person(3, allExceptSun()));
         Week week = scheduler.schedule(persons, new Week(1));
-        List<DayPeopleTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
+        List<DayShiftPeopleTriple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> tuple.equals(new DayPeopleTuple(SUN, new HashSet<>())))
+                .filteredOn(tuple -> tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(1);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> tuple.equals(new DayPeopleTuple(MON, new HashSet<>())))
+                .filteredOn(tuple -> tuple.equals(new DayShiftPeopleTriple(MON, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(1)
                 .extracting("id")
                 .containsOnly(2);
 
         assertThat(scheduleWithPersons)
-                .filteredOn(tuple -> !tuple.equals(new DayPeopleTuple(SUN, new HashSet<>()))
-                        && !tuple.equals(new DayPeopleTuple(MON, new HashSet<>())))
+                .filteredOn(tuple -> !tuple.equals(new DayShiftPeopleTriple(SUN, MORNING, new HashSet<>()))
+                        && !tuple.equals(new DayShiftPeopleTriple(MON, MORNING, new HashSet<>())))
                 .flatExtracting("people")
                 .hasSize(0);
     }

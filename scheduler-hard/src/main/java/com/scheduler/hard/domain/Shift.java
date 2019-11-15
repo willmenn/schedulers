@@ -7,11 +7,9 @@ import java.util.stream.Collectors;
 public class Shift {
     private Set<Integer> people;
     private Integer capacity;
-    private Shifts shift;
 
-    public Shift(Integer capacity, Shifts shift) {
+    public Shift(Integer capacity) {
         this.capacity = capacity;
-        this.shift = shift;
         this.people = new HashSet<>();
     }
 
