@@ -24,4 +24,9 @@ public class DayPeopleTuple {
     public int hashCode() {
         return Objects.hash(days);
     }
+
+    @Override
+    public String toString() {
+        return "{ Day=" + days + " people=" + people + "}\n";
+    }
 }
