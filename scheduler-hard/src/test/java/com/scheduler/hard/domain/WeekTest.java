@@ -53,7 +53,7 @@ class WeekTest {
 
         List<DayPeopleTuple> scheduled = week.getScheduleWithPersons(persons);
         assertThat(scheduled)
-                .flatExtracting("persons")
+                .flatExtracting("people")
                 .extracting("id")
                 .containsExactlyInAnyOrder(1);
     }
@@ -72,7 +72,7 @@ class WeekTest {
 
         List<DayPeopleTuple> scheduled = week.getScheduleWithPersons(persons);
         assertThat(scheduled)
-                .flatExtracting("persons")
+                .flatExtracting("people")
                 .extracting("id")
                 .containsExactlyInAnyOrder(1, 2);
     }
@@ -91,7 +91,7 @@ class WeekTest {
 
         List<DayPeopleTuple> scheduled = week.getScheduleWithPersons(persons);
         assertThat(scheduled)
-                .flatExtracting("persons")
+                .flatExtracting("people")
                 .extracting("id")
                 .containsExactlyInAnyOrder(1, 2);
     }
@@ -113,7 +113,7 @@ class WeekTest {
 
         List<DayPeopleTuple> scheduled = week.getScheduleWithPersons(persons);
         assertThat(scheduled)
-                .flatExtracting("persons")
+                .flatExtracting("people")
                 .extracting("id")
                 .containsExactlyInAnyOrder(1, 2);
     }
