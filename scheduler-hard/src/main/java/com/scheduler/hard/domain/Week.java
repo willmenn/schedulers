@@ -2,6 +2,7 @@ package com.scheduler.hard.domain;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static com.scheduler.hard.domain.Days.FRI;
@@ -32,8 +33,8 @@ public class Week {
         this.sat = new Day(SAT, size);
     }
 
-    public boolean addPersonIntoDay(Days day, Shifts shift, Integer id) {
-        return day.getDay().apply(this).addUniquePerson(id, shift.getShift());
+    public boolean addPersonIntoDay(Function<Week, Day> getDay, Shifts shift, Integer id) {
+        return getDay.apply(this).addUniquePerson(id, shift.getShift());
     }
 
     public List<DayTuple> getScheduleWithPersons(Set<Person> persons) {

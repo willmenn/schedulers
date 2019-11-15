@@ -1,8 +1,5 @@
-package com.scheduler.hard.domain.phisical;
+package com.scheduler.hard.domain;
 
-import com.scheduler.hard.domain.Person;
-import com.scheduler.hard.domain.Shift;
-import com.scheduler.hard.domain.Shifts;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ShiftTest {
 
@@ -48,9 +46,9 @@ class ShiftTest {
         shift.addUniquePeople(2);
 
         Set<Person> peoples = new HashSet<>();
-        Person person1 = new Person(1, new HashSet<>(), new HashSet<>());
-        Person person2 = new Person(2, new HashSet<>(), new HashSet<>());
-        Person person3 = new Person(3, new HashSet<>(), new HashSet<>());
+        Person person1 = new Person(1, new HashSet<>());
+        Person person2 = new Person(2, new HashSet<>());
+        Person person3 = new Person(3, new HashSet<>());
         peoples.add(person1);
         peoples.add(person2);
         peoples.add(person3);

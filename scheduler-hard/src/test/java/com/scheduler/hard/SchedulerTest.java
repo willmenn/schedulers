@@ -1,6 +1,11 @@
-package com.scheduler.hard.domain;
+package com.scheduler.hard;
 
-import com.scheduler.hard.Scheduler;
+import com.scheduler.hard.domain.DayShiftTuple;
+import com.scheduler.hard.domain.DayTuple;
+import com.scheduler.hard.domain.Days;
+import com.scheduler.hard.domain.Person;
+import com.scheduler.hard.domain.Shifts;
+import com.scheduler.hard.domain.Week;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +13,8 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.scheduler.hard.domain.Days.FRI;
 import static com.scheduler.hard.domain.Days.MON;
@@ -16,6 +23,9 @@ import static com.scheduler.hard.domain.Days.SUN;
 import static com.scheduler.hard.domain.Days.THU;
 import static com.scheduler.hard.domain.Days.TUE;
 import static com.scheduler.hard.domain.Days.WED;
+import static com.scheduler.hard.domain.Shifts.AFTERNOON;
+import static com.scheduler.hard.domain.Shifts.MORNING;
+import static com.scheduler.hard.domain.Shifts.NIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SchedulerTest {
@@ -32,7 +42,7 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToSchedule() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
+        persons.add(new Person(1, allExceptSun()));
         Week week = scheduler.schedule(persons, new Week(1));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
@@ -52,8 +62,8 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToScheduleGivenThereIsTwoPersonsForTheSameDay() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
-        persons.add(new Person(2, ALL_EXCEPT_SUN, new HashSet<>()));
+        persons.add(new Person(1, allExceptSun()));
+        persons.add(new Person(2, allExceptSun()));
         Week week = scheduler.schedule(persons, new Week(2));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
@@ -73,8 +83,8 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToScheduleGivenThereIsTwoPersonsForDifferentDays() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
-        persons.add(new Person(2, ALL_EXCEPT_MON, new HashSet<>()));
+        persons.add(new Person(1, allExceptSun()));
+        persons.add(new Person(2, allExceptMon()));
         Week week = scheduler.schedule(persons, new Week(2));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
@@ -101,8 +111,8 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToScheduleOnePersonGivenCapacityExceeds() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
-        persons.add(new Person(2, ALL_EXCEPT_SUN, new HashSet<>()));
+        persons.add(new Person(1, allExceptSun()));
+        persons.add(new Person(2, allExceptSun()));
         Week week = scheduler.schedule(persons, new Week(1));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
@@ -120,9 +130,9 @@ class SchedulerTest {
     @Test
     void shouldBeAbleToSchedule2PersonsGivenCapacityExceedsInTwoDays() {
         Set<Person> persons = new HashSet<>();
-        persons.add(new Person(1, ALL_EXCEPT_SUN, new HashSet<>()));
-        persons.add(new Person(2, ALL_EXCEPT_MON, new HashSet<>()));
-        persons.add(new Person(3, ALL_EXCEPT_SUN, new HashSet<>()));
+        persons.add(new Person(1, allExceptSun()));
+        persons.add(new Person(2, allExceptMon()));
+        persons.add(new Person(3, allExceptSun()));
         Week week = scheduler.schedule(persons, new Week(1));
         List<DayTuple> scheduleWithPersons = week.getScheduleWithPersons(persons);
 
@@ -142,5 +152,23 @@ class SchedulerTest {
                 .filteredOn(tuple -> !tuple.getDays().equals(SUN) && !tuple.getDays().equals(MON))
                 .flatExtracting("persons")
                 .hasSize(0);
+    }
+
+    private Set<DayShiftTuple> allExceptSun() {
+        return ALL_EXCEPT_SUN
+                .stream()
+                .map(buildAllDayExclusion())
+                .collect(Collectors.toSet());
+    }
+
+    private Set<DayShiftTuple> allExceptMon() {
+        return ALL_EXCEPT_MON
+                .stream()
+                .map(buildAllDayExclusion())
+                .collect(Collectors.toSet());
+    }
+
+    private Function<Days, DayShiftTuple> buildAllDayExclusion() {
+        return day -> new DayShiftTuple(day, MORNING, AFTERNOON, NIGHT);
     }
 }

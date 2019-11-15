@@ -27,7 +27,7 @@ public enum Days {
         return name;
     }
 
-    public Function<Week, Day> getDay() {
+    public Function<Week, Day> getFuncDay() {
         return day;
     }
 }

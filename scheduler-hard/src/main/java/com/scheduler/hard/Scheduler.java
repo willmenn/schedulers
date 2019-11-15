@@ -16,7 +16,7 @@ public class Scheduler {
         persons.stream()
                 .map(this::createTuplePersonByDayShift)
                 .flatMap(Collection::stream)
-                .forEach(tuple -> week.addPersonIntoDay(tuple.getDay(), tuple.getShift(), tuple.getId()));
+                .forEach(tuple -> week.addPersonIntoDay(tuple.getDay().getFuncDay(), tuple.getShift(), tuple.getId()));
 
         return week;
     }
