@@ -1,5 +1,6 @@
 package com.scheduler.hard;
 
+import com.scheduler.hard.domain.Day;
 import com.scheduler.hard.domain.Days;
 import com.scheduler.hard.domain.Person;
 import com.scheduler.hard.domain.Shifts;
@@ -8,6 +9,7 @@ import com.scheduler.hard.domain.Week;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Scheduler {
@@ -16,7 +18,7 @@ public class Scheduler {
         persons.stream()
                 .map(this::createTuplePersonByDayShift)
                 .flatMap(Collection::stream)
-                .forEach(tuple -> week.addPersonIntoDay(tuple.getDay().getFuncDay(), tuple.getShift(), tuple.getId()));
+                .forEach(tuple -> week.addPersonIntoDay(tuple.getDayFunc(), tuple.getShift(), tuple.getId()));
 
         return week;
     }
@@ -32,22 +34,22 @@ public class Scheduler {
     private Set<PersonTuple> addShifts(Person person, Days d) {
         return Shifts.all.stream()
                 .filter(shift -> !person.isDayAndShiftInExclusionList(d, shift))
-                .map(shift -> new PersonTuple(d, person.getId(), shift))
+                .map(shift -> new PersonTuple(d.getFuncDay(), person.getId(), shift))
                 .collect(Collectors.toSet());
     }
 
     private class PersonTuple {
-        private final Days day;
+        private final Function<Week, Day> day;
         private final Integer id;
         private final Shifts shift;
 
-        PersonTuple(Days day, Integer id, Shifts shift) {
+        PersonTuple(Function<Week, Day> day, Integer id, Shifts shift) {
             this.day = day;
             this.id = id;
             this.shift = shift;
         }
 
-        private Days getDay() {
+        private Function<Week, Day> getDayFunc() {
             return day;
         }
 

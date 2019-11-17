@@ -1,5 +1,6 @@
 package com.scheduler.hard.domain;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,6 +13,19 @@ public class DayShiftPeopleTriple {
         this.days = days;
         this.shifts = shifts;
         this.people = people;
+    }
+
+    public static Comparator<DayShiftPeopleTriple> comparator() {
+        return Comparator.comparing(DayShiftPeopleTriple::getDaysOrder)
+                .thenComparing(DayShiftPeopleTriple::getShiftsOrder);
+    }
+
+    private int getDaysOrder() {
+        return days.getOrder();
+    }
+
+    private int getShiftsOrder() {
+        return shifts.getOrder();
     }
 
     @Override
