@@ -1,18 +1,11 @@
 package com.scheduler.hard.domain;
 
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
-import static com.scheduler.hard.domain.Days.FRI;
-import static com.scheduler.hard.domain.Days.MON;
-import static com.scheduler.hard.domain.Days.SAT;
-import static com.scheduler.hard.domain.Days.SUN;
-import static com.scheduler.hard.domain.Days.THU;
-import static com.scheduler.hard.domain.Days.TUE;
-import static com.scheduler.hard.domain.Days.WED;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
@@ -35,15 +28,47 @@ public class Week {
         this.sat = new Day(size);
     }
 
-    public boolean addPersonIntoDay(Function<Week, Day> getDay, Shifts shift, Integer id) {
-        return getDay.apply(this).addUniquePerson(id, shift.getShift());
+    boolean addPersonIntoDay(Function<Week, Day> getDay, Function<Day, Shift> getShift, Integer id) {
+        return getDay.apply(this).addUniquePerson(id, getShift);
     }
 
-    public List<DayShiftPeopleTriple> getScheduleWithPersons(Set<Person> persons) {
+    List<DayShiftPeopleTriple> getScheduleWithPersons(Set<Person> persons) {
         return Days.all.stream()
                 .map(d -> applyForEachShift(persons, d))
                 .flatMap(Collection::stream)
                 .collect(toList());
+    }
+
+    boolean isPersonScheduled(Function<Week, Day> getDay, Function<Day, Shift> getShift, Integer id) {
+        return getDay.apply(this).isPersonScheduled(getShift, id);
+    }
+
+    private Day getSun() {
+        return sun;
+    }
+
+    private Day getMon() {
+        return mon;
+    }
+
+    private Day getTue() {
+        return tue;
+    }
+
+    private Day getWed() {
+        return wed;
+    }
+
+    private Day getThu() {
+        return thu;
+    }
+
+    private Day getFri() {
+        return fri;
+    }
+
+    private Day getSat() {
+        return sat;
     }
 
     private Set<DayShiftPeopleTriple> applyForEachShift(Set<Person> persons, Days d) {
@@ -56,31 +81,32 @@ public class Week {
         return d.getFuncDay().apply(this).getPersonsScheduled(persons, shift.getShift());
     }
 
-    Day getSun() {
-        return sun;
-    }
+    public enum Days {
+        SUN(Week::getSun, 0),
+        MON(Week::getMon, 1),
+        TUE(Week::getTue, 2),
+        WED(Week::getWed, 3),
+        THU(Week::getThu, 4),
+        FRI(Week::getFri, 5),
+        SAT(Week::getSat, 6);
 
-    Day getMon() {
-        return mon;
-    }
+        public static final EnumSet<Days> all = EnumSet
+                .allOf(Days.class);
 
-    Day getTue() {
-        return tue;
-    }
+        private final Function<Week, Day> day;
+        private final int order;
 
-    Day getWed() {
-        return wed;
-    }
+        Days(Function<Week, Day> day, int order) {
+            this.day = day;
+            this.order = order;
+        }
 
-    Day getThu() {
-        return thu;
-    }
+        public Function<Week, Day> getFuncDay() {
+            return day;
+        }
 
-    Day getFri() {
-        return fri;
-    }
-
-    Day getSat() {
-        return sat;
+        int getOrder() {
+            return order;
+        }
     }
 }

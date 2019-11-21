@@ -18,7 +18,7 @@ public enum Shifts {
         this.order = order;
     }
 
-    Function<Day, Shift> getShift() {
+    public Function<Day, Shift> getShift() {
         return shift;
     }
 

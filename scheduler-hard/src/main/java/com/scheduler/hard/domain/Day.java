@@ -22,6 +22,10 @@ public class Day {
         return getShift.apply(this).addUniquePeople(id);
     }
 
+    boolean isPersonScheduled(Function<Day, Shift> getShift, Integer id) {
+        return getShift.apply(this).isPersonScheduled(id);
+    }
+
     Set<Person> getPersonsScheduled(Set<Person> peoples, Function<Day, Shift> getShift) {
         return getShift.apply(this).getPeoples(peoples);
     }

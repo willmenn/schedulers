@@ -46,9 +46,9 @@ class ShiftTest {
         shift.addUniquePeople(2);
 
         Set<Person> peoples = new HashSet<>();
-        Person person1 = new Person(1, new HashSet<>());
-        Person person2 = new Person(2, new HashSet<>());
-        Person person3 = new Person(3, new HashSet<>());
+        Person person1 = new Person(1, new HashSet<>(), null);
+        Person person2 = new Person(2, new HashSet<>(), null);
+        Person person3 = new Person(3, new HashSet<>(), null);
         peoples.add(person1);
         peoples.add(person2);
         peoples.add(person3);

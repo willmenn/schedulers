@@ -27,6 +27,10 @@ public class Shift {
                 .collect(Collectors.toSet());
     }
 
+    boolean isPersonScheduled(Integer id) {
+        return this.people.contains(id);
+    }
+
     private boolean isCapacityFull() {
         return this.people.size() == capacity;
     }

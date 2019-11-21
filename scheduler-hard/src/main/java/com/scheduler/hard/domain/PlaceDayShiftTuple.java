@@ -1,13 +1,15 @@
 package com.scheduler.hard.domain;
 
+import com.scheduler.hard.domain.Week.Days;
+
 import java.util.HashSet;
 import java.util.Set;
 
-public class DayShiftTuple {
+public class PlaceDayShiftTuple {
     private final Days day;
     private final Set<Shifts> shifts;
 
-    public DayShiftTuple(Days day, Shifts morning, Shifts afternoon, Shifts night) {
+    public PlaceDayShiftTuple(Days day, Shifts morning, Shifts afternoon, Shifts night) {
         this.day = day;
         this.shifts = new HashSet<>();
         addShiftIfNotNull(this.shifts, morning);
@@ -15,7 +17,7 @@ public class DayShiftTuple {
         addShiftIfNotNull(this.shifts, night);
     }
 
-    boolean isEquals(Days day, Shifts shift) {
+    boolean isDayShiftEquals(Days day, Shifts shift) {
         return this.day.equals(day) && this.shifts.stream().anyMatch(s -> s.equals(shift));
     }
 

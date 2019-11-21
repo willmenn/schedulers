@@ -1,15 +1,20 @@
 package com.scheduler.hard.domain;
 
+import com.scheduler.hard.domain.Week.Days;
+
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class Person {
     private final Integer id;
-    private final Set<DayShiftTuple> dayShiftExclusionList;
+    private final Set<PlaceDayShiftTuple> dayShiftExclusionList;
+    private final Set<Integer> placeIds;
 
-    public Person(Integer id, Set<DayShiftTuple> dayShiftExclusionList) {
+    public Person(Integer id, Set<PlaceDayShiftTuple> dayShiftExclusionList, Set<Integer> placeIds) {
         this.id = id;
-        this.dayShiftExclusionList = dayShiftExclusionList;
+        this.dayShiftExclusionList = Objects.requireNonNullElseGet(dayShiftExclusionList, HashSet::new);
+        this.placeIds = Objects.requireNonNullElseGet(placeIds, HashSet::new);
     }
 
     public Integer getId() {
@@ -19,7 +24,11 @@ public class Person {
     public boolean isDayAndShiftInExclusionList(Days day, Shifts shift) {
         return this.dayShiftExclusionList
                 .stream()
-                .anyMatch(s -> s.isEquals(day, shift));
+                .anyMatch(s -> s.isDayShiftEquals(day, shift));
+    }
+
+    public boolean isPlaceInExclusionList(Integer id) {
+        return this.placeIds.contains(id);
     }
 
     @Override
@@ -33,5 +42,12 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                '}';
     }
 }
