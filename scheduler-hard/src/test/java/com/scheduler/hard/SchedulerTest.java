@@ -4,7 +4,6 @@ import com.scheduler.hard.domain.DayShiftPeopleTriple;
 import com.scheduler.hard.domain.Person;
 import com.scheduler.hard.domain.Place;
 import com.scheduler.hard.domain.PlaceDayShiftTuple;
-import com.scheduler.hard.domain.Week;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

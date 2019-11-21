@@ -3,10 +3,6 @@ package com.scheduler.hard.domain;
 import java.util.Set;
 import java.util.function.Function;
 
-import static com.scheduler.hard.domain.Shifts.AFTERNOON;
-import static com.scheduler.hard.domain.Shifts.MORNING;
-import static com.scheduler.hard.domain.Shifts.NIGHT;
-
 public class Day {
     private final Shift morning;
     private final Shift afternoon;
