@@ -8,19 +8,19 @@ public class Shift {
     private Set<Integer> people;
     private Integer capacity;
 
-    public Shift(Integer capacity) {
+    Shift(Integer capacity) {
         this.capacity = capacity;
         this.people = new HashSet<>();
     }
 
-    public boolean addUniquePeople(Integer id) {
+    boolean addUniquePeople(Integer id) {
         if (isCapacityFull()) {
             return false;
         }
         return this.people.add(id);
     }
 
-    public Set<Person> getPeoples(Set<Person> originalPeoples) {
+    Set<Person> getPeoples(Set<Person> originalPeoples) {
         return originalPeoples
                 .stream()
                 .filter(p -> this.people.contains(p.getId()))

@@ -8,7 +8,7 @@ public class Day {
     private final Shift afternoon;
     private final Shift night;
 
-    public Day(Integer capacity) {
+    Day(Integer capacity) {
         this.morning = new Shift(capacity);
         this.afternoon = new Shift(capacity);
         this.night = new Shift(capacity);

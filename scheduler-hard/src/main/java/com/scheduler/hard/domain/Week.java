@@ -18,7 +18,7 @@ public class Week {
     private final Day fri;
     private final Day sat;
 
-    public Week(int size) {
+    Week(int size) {
         this.sun = new Day(size);
         this.mon = new Day(size);
         this.tue = new Day(size);

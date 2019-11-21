@@ -69,7 +69,7 @@ public class Scheduler {
         private final Function<Day, Shift> shift;
         private final Set<Integer> placeIds;
 
-        PersonTuple(Function<Week, Day> day, Integer id, Function<Day, Shift> shift, Set<Integer> placeIds) {
+        private PersonTuple(Function<Week, Day> day, Integer id, Function<Day, Shift> shift, Set<Integer> placeIds) {
             this.day = day;
             this.id = id;
             this.shift = shift;
