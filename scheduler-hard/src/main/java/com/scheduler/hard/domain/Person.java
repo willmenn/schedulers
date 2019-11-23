@@ -1,5 +1,6 @@
 package com.scheduler.hard.domain;
 
+import com.scheduler.hard.domain.Day.Shifts;
 import com.scheduler.hard.domain.Week.Days;
 
 import java.util.HashSet;

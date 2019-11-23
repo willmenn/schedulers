@@ -1,5 +1,6 @@
 package com.scheduler.hard.domain;
 
+import com.scheduler.hard.domain.Day.Shifts;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

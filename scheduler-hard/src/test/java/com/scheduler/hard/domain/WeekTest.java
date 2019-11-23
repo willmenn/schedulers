@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.scheduler.hard.domain.Shifts.MORNING;
+import static com.scheduler.hard.domain.Day.Shifts.MORNING;
 import static com.scheduler.hard.domain.Week.Days.MON;
 import static com.scheduler.hard.domain.Week.Days.TUE;
 import static org.assertj.core.api.Assertions.assertThat;

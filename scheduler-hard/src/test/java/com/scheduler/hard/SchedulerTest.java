@@ -15,9 +15,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.scheduler.hard.domain.Shifts.AFTERNOON;
-import static com.scheduler.hard.domain.Shifts.MORNING;
-import static com.scheduler.hard.domain.Shifts.NIGHT;
+import static com.scheduler.hard.domain.Day.Shifts.AFTERNOON;
+import static com.scheduler.hard.domain.Day.Shifts.MORNING;
+import static com.scheduler.hard.domain.Day.Shifts.NIGHT;
 import static com.scheduler.hard.domain.Week.Days;
 import static com.scheduler.hard.domain.Week.Days.FRI;
 import static com.scheduler.hard.domain.Week.Days.MON;

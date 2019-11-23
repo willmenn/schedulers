@@ -1,12 +1,13 @@
 package com.scheduler.hard;
 
 import com.scheduler.hard.domain.Day;
+import com.scheduler.hard.domain.Day.Shifts;
 import com.scheduler.hard.domain.Person;
 import com.scheduler.hard.domain.Place;
 import com.scheduler.hard.domain.Shift;
-import com.scheduler.hard.domain.Shifts;
 import com.scheduler.hard.domain.Week;
 import com.scheduler.hard.domain.Week.Days;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Component
 public class Scheduler {
 
     // Normalizar por um parametro.

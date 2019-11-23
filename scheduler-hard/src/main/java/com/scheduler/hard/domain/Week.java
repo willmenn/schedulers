@@ -1,5 +1,7 @@
 package com.scheduler.hard.domain;
 
+import com.scheduler.hard.domain.Day.Shifts;
+
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
