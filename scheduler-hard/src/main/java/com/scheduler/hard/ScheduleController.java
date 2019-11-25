@@ -2,6 +2,7 @@ package com.scheduler.hard;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scheduler.hard.domain.Day.Shifts;
+import com.scheduler.hard.domain.DayShiftPeopleTriple;
 import com.scheduler.hard.domain.Person;
 import com.scheduler.hard.domain.Place;
 import com.scheduler.hard.domain.PlaceDayShiftTuple;
@@ -38,8 +39,12 @@ public class ScheduleController {
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public Set<Place> createSchedule(@RequestBody ScheduleRequest request) {
-        return scheduler.schedule(createPerson(request), createPlaces(request.placeNames, request.size));
+    public Set<ScheduleResponse> createSchedule(@RequestBody ScheduleRequest request) {
+        Set<Person> people = createPerson(request);
+        return scheduler.schedule(people, createPlaces(request.placeNames, request.size))
+                .stream()
+                .map(place -> new ScheduleResponse(place.getId(), place.getPersonsScheduled(people)))
+                .collect(Collectors.toSet());
     }
 
     private Set<Person> createPerson(@RequestBody ScheduleRequest request) {
@@ -74,6 +79,27 @@ public class ScheduleController {
                 .stream()
                 .map(id -> new Place(id, size))
                 .collect(Collectors.toSet());
+    }
+
+    static class ScheduleResponse {
+        private Integer placeId;
+        private List<DayShiftPeopleTriple> schedule;
+
+        public ScheduleResponse() {
+        }
+
+        public ScheduleResponse(Integer placeId, List<DayShiftPeopleTriple> schedule) {
+            this.placeId = placeId;
+            this.schedule = schedule;
+        }
+
+        public Integer getPlaceId() {
+            return placeId;
+        }
+
+        public List<DayShiftPeopleTriple> getSchedule() {
+            return schedule;
+        }
     }
 
     static class ScheduleRequest {

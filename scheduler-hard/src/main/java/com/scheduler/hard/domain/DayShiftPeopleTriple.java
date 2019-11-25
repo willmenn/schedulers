@@ -7,9 +7,12 @@ import java.util.Objects;
 import java.util.Set;
 
 public class DayShiftPeopleTriple {
-    private final Week.Days days;
-    private final Shifts shifts;
-    private final Set<Person> people;
+    private Week.Days days;
+    private Shifts shifts;
+    private Set<Person> people;
+
+    public DayShiftPeopleTriple() {
+    }
 
     public DayShiftPeopleTriple(Week.Days days, Shifts shifts, Set<Person> people) {
         this.days = days;
@@ -20,6 +23,18 @@ public class DayShiftPeopleTriple {
     public static Comparator<DayShiftPeopleTriple> comparator() {
         return Comparator.comparing(DayShiftPeopleTriple::getDaysOrder)
                 .thenComparing(DayShiftPeopleTriple::getShiftsOrder);
+    }
+
+    public Week.Days getDays() {
+        return days;
+    }
+
+    public Shifts getShifts() {
+        return shifts;
+    }
+
+    public Set<Person> getPeople() {
+        return people;
     }
 
     private int getDaysOrder() {
