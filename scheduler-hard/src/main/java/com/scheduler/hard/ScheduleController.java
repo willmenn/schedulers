@@ -1,5 +1,6 @@
 package com.scheduler.hard;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scheduler.hard.domain.Day.Shifts;
 import com.scheduler.hard.domain.Person;
 import com.scheduler.hard.domain.Place;
@@ -11,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,8 +47,8 @@ public class ScheduleController {
                 .stream()
                 .map(person ->
                         new Person(person.id,
-                                createDayShiftExclusion(person.dayShiftExclusion),
-                                new HashSet<>(person.placeExclusion))
+                                createDayShiftExclusion(person.getDayShiftExclusionOrDefault()),
+                                new HashSet<>(person.getPlaceExclusionOrDefault()))
                 ).collect(Collectors.toSet());
     }
 
@@ -72,7 +76,7 @@ public class ScheduleController {
                 .collect(Collectors.toSet());
     }
 
-    private static class ScheduleRequest {
+    static class ScheduleRequest {
         @NotNull
         @Size(min = 1)
         private Set<PersonRequest> people;
@@ -80,34 +84,65 @@ public class ScheduleController {
         private int size;
         @NotNull
         @Size(min = 1)
+        @Valid
         private List<Integer> placeNames;
 
-        public ScheduleRequest(Set<PersonRequest> people, int size, List<Integer> placeNames) {
-            this.people = people;
-            this.size = size;
-            this.placeNames = placeNames;
+        public ScheduleRequest() {
+        }
+
+        public Set<PersonRequest> getPeople() {
+            return people;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public List<Integer> getPlaceNames() {
+            return placeNames;
         }
     }
 
     private static class PersonRequest {
+        @NotNull
         private Integer id;
+        @Valid
         private List<ShiftExclusion> dayShiftExclusion;
         private List<Integer> placeExclusion;
 
-        public PersonRequest(Integer id, List<ShiftExclusion> dayShiftExclusion, List<Integer> placeExclusion) {
-            this.id = id;
-            this.dayShiftExclusion = dayShiftExclusion;
-            this.placeExclusion = placeExclusion;
+        public PersonRequest() {
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public List<ShiftExclusion> getDayShiftExclusion() {
+            return dayShiftExclusion;
+        }
+
+        public List<Integer> getPlaceExclusion() {
+            return placeExclusion;
+        }
+
+        @JsonIgnore
+        private List<ShiftExclusion> getDayShiftExclusionOrDefault() {
+            return Objects.requireNonNullElseGet(this.dayShiftExclusion, ArrayList::new);
+        }
+
+        @JsonIgnore
+        private List<Integer> getPlaceExclusionOrDefault() {
+            return Objects.requireNonNullElseGet(this.placeExclusion, ArrayList::new);
         }
     }
 
     private static class ShiftExclusion {
+        @NotNull
         private Days day;
+        @NotNull
         private Shifts shift;
 
-        private ShiftExclusion(Days day, Shifts shift) {
-            this.day = day;
-            this.shift = shift;
+        public ShiftExclusion() {
         }
 
         public Days getDay() {
