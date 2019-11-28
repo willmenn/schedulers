@@ -1,9 +1,7 @@
 package com.scheduler.hard.domain;
 
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Shift {

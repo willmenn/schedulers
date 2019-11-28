@@ -1,12 +1,12 @@
 package com.scheduler.hard.domain.io;
 
-import com.scheduler.hard.domain.Day;
+import com.scheduler.hard.domain.Day.Shifts;
 import com.scheduler.hard.domain.Person;
 import com.scheduler.hard.domain.Place;
 import com.scheduler.hard.domain.PlaceDayShiftTuple;
 import com.scheduler.hard.domain.Week;
+import com.scheduler.hard.domain.io.ScheduleRequest.ShiftExclusion;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ScheduleRequestConverter {
                 .collect(Collectors.toSet());
     }
 
-     Set<Person> toPeople(@RequestBody ScheduleRequest request) {
+    Set<Person> toPeople(ScheduleRequest request) {
         return request.getPeople()
                 .stream()
                 .map(person ->
@@ -36,21 +36,22 @@ public class ScheduleRequestConverter {
                 ).collect(Collectors.toSet());
     }
 
-    private Set<PlaceDayShiftTuple> createDayShiftExclusion(List<ScheduleRequest.ShiftExclusion> shiftExclusion) {
-        Map<Week.Days, Map<Day.Shifts, List<ScheduleRequest.ShiftExclusion>>> dayShiftGrouped = shiftExclusion
+    private Set<PlaceDayShiftTuple> createDayShiftExclusion(List<ShiftExclusion> shiftExclusion) {
+        Map<Week.Days, Map<Shifts, List<ShiftExclusion>>> dayShiftGrouped = shiftExclusion
                 .stream()
-                .collect(groupingBy(ScheduleRequest.ShiftExclusion::getDay, groupingBy(ScheduleRequest.ShiftExclusion::getShift)));
+                .collect(groupingBy(ShiftExclusion::getDay,
+                        groupingBy(ShiftExclusion::getShift)));
 
         return dayShiftGrouped.entrySet().stream()
                 .map(entry -> new PlaceDayShiftTuple(entry.getKey(),
-                        checkIfShiftIsPresent(entry.getValue(), Day.Shifts.MORNING),
-                        checkIfShiftIsPresent(entry.getValue(), Day.Shifts.AFTERNOON),
-                        checkIfShiftIsPresent(entry.getValue(), Day.Shifts.NIGHT)))
+                        checkIfShiftIsPresent(entry.getValue(), Shifts.MORNING),
+                        checkIfShiftIsPresent(entry.getValue(), Shifts.AFTERNOON),
+                        checkIfShiftIsPresent(entry.getValue(), Shifts.NIGHT)))
                 .collect(Collectors.toSet());
     }
 
-    private Day.Shifts checkIfShiftIsPresent(Map<Day.Shifts, List<ScheduleRequest.ShiftExclusion>> entry, Day.Shifts shift) {
+    private Shifts checkIfShiftIsPresent(Map<Shifts, List<ShiftExclusion>> entry,
+                                         Shifts shift) {
         return entry.containsKey(shift) ? shift : null;
     }
-
 }

@@ -23,14 +23,14 @@ public class Scheduler {
 
     public Set<Place> schedule(Set<Person> persons, Set<Place> places) {
         persons.stream()
-                .map(person -> createTuplePersonByDayShift(person, places))
+                .map(person -> createTriplePersonByDayShift(person, places))
                 .flatMap(Collection::stream)
                 .forEach(tuple -> addIntoPlaceIfPresent(places, tuple));
 
         return places;
     }
 
-    private void addIntoPlaceIfPresent(Set<Place> places, PersonTuple tuple) {
+    private void addIntoPlaceIfPresent(Set<Place> places, PlacePersonDayShiftTuple tuple) {
         places
                 .stream()
                 .filter(place -> tuple.isPlaceAllowedToBeScheduled(place.getId()))
@@ -39,7 +39,7 @@ public class Scheduler {
                 .ifPresent(place -> place.addUniquePerson(tuple.getDayFunc(), tuple.getShift(), tuple.getId()));
     }
 
-    private Set<PersonTuple> createTuplePersonByDayShift(Person person, Set<Place> places) {
+    private Set<PlacePersonDayShiftTuple> createTriplePersonByDayShift(Person person, Set<Place> places) {
         return Days.all
                 .stream()
                 .map(d -> addShiftsOnlyIfItsNotInExclusionList(person, d, places))
@@ -47,11 +47,11 @@ public class Scheduler {
                 .collect(Collectors.toSet());
     }
 
-    private Set<PersonTuple> addShiftsOnlyIfItsNotInExclusionList(Person person, Days d, Set<Place> places) {
+    private Set<PlacePersonDayShiftTuple> addShiftsOnlyIfItsNotInExclusionList(Person person, Days d, Set<Place> places) {
         return Shifts.all.stream()
                 .filter(shift -> !person.isDayAndShiftInExclusionList(d, shift))
                 .map(shift ->
-                        new PersonTuple(d.getFuncDay(), person.getId(), shift.getShift(),
+                        new PlacePersonDayShiftTuple(d.getFuncDay(), person.getId(), shift.getShift(),
                                 getPlacesThatAreNotInExclusionList(person, places)
                         )
                 )
@@ -65,13 +65,14 @@ public class Scheduler {
                 .collect(Collectors.toSet());
     }
 
-    private class PersonTuple {
+    private class PlacePersonDayShiftTuple {
         private final Function<Week, Day> day;
         private final Integer id;
         private final Function<Day, Shift> shift;
         private final Set<Integer> placeIds;
 
-        private PersonTuple(Function<Week, Day> day, Integer id, Function<Day, Shift> shift, Set<Integer> placeIds) {
+        private PlacePersonDayShiftTuple(Function<Week, Day> day, Integer id, Function<Day, Shift> shift,
+                                         Set<Integer> placeIds) {
             this.day = day;
             this.id = id;
             this.shift = shift;
@@ -98,7 +99,7 @@ public class Scheduler {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            PersonTuple that = (PersonTuple) o;
+            PlacePersonDayShiftTuple that = (PlacePersonDayShiftTuple) o;
             return Objects.equals(day, that.day) &&
                     Objects.equals(id, that.id) &&
                     shift == that.shift;

@@ -31,9 +31,9 @@ public class ScheduleController {
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public Set<ScheduleResponse> createSchedule(@RequestBody ScheduleRequest request) {
         Set<Person> people = scheduleRequestConverter.toPeople(request);
+        Set<Place> places = scheduleRequestConverter.toPlaces(request.getPlaceNames(), request.getSize());
 
-        Set<Place> schedule = scheduler.schedule(people,
-                scheduleRequestConverter.toPlaces(request.getPlaceNames(), request.getSize()));
+        Set<Place> schedule = scheduler.schedule(people, places);
 
         return scheduleResponseConverter.fromPlaces(schedule, people);
     }

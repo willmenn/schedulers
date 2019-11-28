@@ -27,6 +27,12 @@ public class ScheduleRequest {
     public ScheduleRequest() {
     }
 
+    ScheduleRequest(Set<PersonRequest> people, int size, List<Integer> placeNames) {
+        this.people = people;
+        this.size = size;
+        this.placeNames = placeNames;
+    }
+
     public Set<PersonRequest> getPeople() {
         return people;
     }
@@ -48,6 +54,12 @@ public class ScheduleRequest {
         private List<Integer> placeExclusion;
 
         public PersonRequest() {
+        }
+
+        public PersonRequest(Integer id, List<ShiftExclusion> dayShiftExclusion, List<Integer> placeExclusion) {
+            this.id = id;
+            this.dayShiftExclusion = dayShiftExclusion;
+            this.placeExclusion = placeExclusion;
         }
 
         public Integer getId() {
@@ -80,6 +92,11 @@ public class ScheduleRequest {
         private Day.Shifts shift;
 
         public ShiftExclusion() {
+        }
+
+        public ShiftExclusion(@NotNull Week.Days day, @NotNull Day.Shifts shift) {
+            this.day = day;
+            this.shift = shift;
         }
 
         public Week.Days getDay() {
