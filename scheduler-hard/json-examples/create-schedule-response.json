@@ -1,0 +1,192 @@
+[
+    {
+        "placeId": 1,
+        "schedule": [
+            {
+                "days": "SUN",
+                "shifts": "MORNING",
+                "people": []
+            },
+            {
+                "days": "SUN",
+                "shifts": "NIGHT",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "SUN",
+                "shifts": "AFTERNOON",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "MON",
+                "shifts": "MORNING",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "MON",
+                "shifts": "AFTERNOON",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "MON",
+                "shifts": "NIGHT",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "TUE",
+                "shifts": "NIGHT",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "TUE",
+                "shifts": "MORNING",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "TUE",
+                "shifts": "AFTERNOON",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "WED",
+                "shifts": "NIGHT",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "WED",
+                "shifts": "AFTERNOON",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "WED",
+                "shifts": "MORNING",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "THU",
+                "shifts": "NIGHT",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "THU",
+                "shifts": "MORNING",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "THU",
+                "shifts": "AFTERNOON",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "FRI",
+                "shifts": "MORNING",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "FRI",
+                "shifts": "NIGHT",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "FRI",
+                "shifts": "AFTERNOON",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "SAT",
+                "shifts": "NIGHT",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "SAT",
+                "shifts": "AFTERNOON",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            },
+            {
+                "days": "SAT",
+                "shifts": "MORNING",
+                "people": [
+                    {
+                        "id": 1
+                    }
+                ]
+            }
+        ]
+    }
+]

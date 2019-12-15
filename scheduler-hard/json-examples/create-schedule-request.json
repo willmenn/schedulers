@@ -1,0 +1,17 @@
+{
+	"people" : [
+		{
+			"id" : 1,
+			"dayShiftExclusion" :[ 
+				{
+					"day" : "SUN",
+					"shift" : "MORNING"
+				}
+			]
+		}
+	],
+	"placeNames" : [
+		1
+		],
+	"size" : 1
+}
