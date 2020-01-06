@@ -3,7 +3,219 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  EXAMPLE_DATA: [
+    {
+      placeId: 1,
+      schedule: [
+        {
+          days: "SUN",
+          shift: "Morning",
+          people: []
+        },
+        {
+          days: "SUN",
+          shift: "Night",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "SUN",
+          shift: "Afternoon",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "MON",
+          shift: "Morning",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "MON",
+          shift: "Night",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "MON",
+          shift: "Afternoon",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "TUE",
+          shift: "Morning",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "TUE",
+          shift: "Night",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "TUE",
+          shift: "Afternoon",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "WED",
+          shift: "Morning",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "WED",
+          shift: "Night",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "WED",
+          shift: "Afternoon",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "THU",
+          shift: "Morning",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "THU",
+          shift: "Night",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "THU",
+          shift: "Afternoon",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "FRI",
+          shift: "Morning",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "FRI",
+          shift: "Night",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "FRI",
+          shift: "Afternoon",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "SAT",
+          shift: "Morning",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "SAT",
+          shift: "Night",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+        {
+          days: "SAT",
+          shift: "Afternoon",
+          people: [
+            {
+              id: 1,
+              name: "Steve"
+            }
+          ]
+        },
+      ]
+    }
+  ]
 };
 
 /*
