@@ -3,6 +3,7 @@ import { People } from '../models/people';
 import { Schedule } from '../models/schedule';
 import { ScheduleFromPlace } from '../models/schedule-from-place';
 import { environment } from '../../environments/environment';
+import { ScheduleService } from '../schedule.service';
 
 @Component({
   selector: 'app-schedule-table',
@@ -13,12 +14,12 @@ export class ScheduleTableComponent implements OnInit {
 
   displayedColumns: string[] = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   dataSource = [];
-  constructor() {
+  constructor(public scheduleService: ScheduleService) {
 
   }
 
   ngOnInit() {
-    let schedulesFromPlace = environment.EXAMPLE_DATA.map(e => e.schedule);
+    let schedulesFromPlace = environment.EXAMPLE_DATA.map(e => e.schedule); //this.scheduleService.getSchedules
     let rows = [];
     for (let schedules of schedulesFromPlace) {
       let uniquePeoples: People[] = this.getUniquePeople(schedules.map(e => e.people));
