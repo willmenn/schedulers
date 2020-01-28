@@ -1,15 +1,12 @@
 package com.scheduler.hard;
 
-import com.scheduler.hard.domain.Day;
+import com.scheduler.hard.domain.*;
 import com.scheduler.hard.domain.Day.Shifts;
-import com.scheduler.hard.domain.Person;
-import com.scheduler.hard.domain.Place;
-import com.scheduler.hard.domain.Shift;
-import com.scheduler.hard.domain.Week;
 import com.scheduler.hard.domain.Week.Days;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
@@ -27,8 +24,11 @@ public class Scheduler {
                 .flatMap(Collection::stream)
                 .forEach(tuple -> addIntoPlaceIfPresent(places, tuple));
 
+        //getPersonScheduleQty(persons, places);
+
         return places;
     }
+
 
     private void addIntoPlaceIfPresent(Set<Place> places, PlacePersonDayShiftTuple tuple) {
         places
@@ -65,7 +65,37 @@ public class Scheduler {
                 .collect(Collectors.toSet());
     }
 
-    private class PlacePersonDayShiftTuple {
+    //This method is to be able to get the Mean
+    private void getPersonScheduleQty(Set<Person> persons, Set<Place> places) {
+        Map<Integer, Integer> collect = places
+                .stream()
+                .flatMap(place -> place.getPersonsScheduled(persons).stream())
+                .flatMap(triple -> triple.getPeople().stream()
+                        .map(person -> new PersonScheduleSum(person.getId()))
+                        .collect(Collectors.toList())
+                        .stream())
+                .collect(Collectors.toMap(PersonScheduleSum::getId, PersonScheduleSum::getOne, Integer::sum));
+    }
+
+    private static class PersonScheduleSum {
+        private Integer id;
+        private Integer one;
+
+        private PersonScheduleSum(Integer id) {
+            this.id = id;
+            this.one = 1;
+        }
+
+        private Integer getId() {
+            return this.id;
+        }
+
+        public Integer getOne() {
+            return this.one;
+        }
+    }
+
+    private static class PlacePersonDayShiftTuple {
         private final Function<Week, Day> day;
         private final Integer id;
         private final Function<Day, Shift> shift;
